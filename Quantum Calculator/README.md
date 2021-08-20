@@ -1,0 +1,11 @@
+# Quantum Bitwise Calculator
+
+This calculator is built on Boolean logic to create basic mathematical operations, which are all contained within [bqm_calculator.py](bqm_calculator.py). Basic gates are created by punishing unwanted behaviors. Bits are designated as input or output bits and are punished according to the truth table for that gate. DWave describes the process more in-depth on [this page](https://docs.ocean.dwavesys.com/en/stable/examples/and.html). I've gone ahead and created a few more gates that are needed for addition and multiplication. DWave has built-in functions for addition and multiplication, but they don't allow me to manipulate the energy coefficients. This feature is important because it would allow me to prioritize making one equation correct over another if they contradict each other in any way. Many of the functions have a scale argument, which is what manipulates the scaling of the gates within that operation. The addition and multiplication functions are built out of the simpler gates using typical Boolean logic. At the lowest energy state, a function created using these gates will be optimal, as designed. 
+
+Numbers are represented in binary using two's complement to represent negative numbers. In theory, you could use a different number of bits for each variable, but I didn't see the need to implement that functionality. 
+
+Since this calculator functions based on optimization, it can work "backwards", allowing it to divide, subtract, and factor. For the equation P = n*q, each of the variables can be fixed depending on the desired functionality. If n = 3 and q = 4, then it's a forwards multiplication which solves for P. If P = 12, then it becomes a factor problem to solve for p and q, which could have solutions of (1, 12), (3, 4), (2, 6), etc. If P = 12 and n = 3, then q is solved for as 4. Since the problem formulation for each is identical, they all use the same number of qubits. 
+
+## Issues
+
+This approach ultimately failed due to lack of scalability. Creating complex functions requires an insane amount of auxiliary variables. While there's very little preprocessing, there's too many qubits for the problem to be solved in reasonable time, or with reasonable accuracy. 
