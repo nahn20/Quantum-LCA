@@ -3,7 +3,9 @@ import math
 from scipy.stats import norm
 import matplotlib.pyplot as plt
 from generate_data import generate_data
-def safe_exp(x): #Becomes 0 if it overflows (will overflow to a tiny decimal in our case)
+def safe_exp(x):
+    #Becomes 0 if it overflows (will overflow to a tiny decimal in our case)
+    #Safer to use than math.exp() and has the same effect
     try:
         return math.exp(x)
     except OverflowError:
@@ -16,6 +18,7 @@ def calculate_drift(params, inCSV='in.csv', out='out.csv'):
     y = []
     W = [] #Wiener process
     rows = []
+    #Uses same file format as Quantum LCA to compare answers with the same sheet
     with open('in.csv') as csv_in:
         reader = csv.reader(csv_in)
         for t,row in enumerate(reader):
